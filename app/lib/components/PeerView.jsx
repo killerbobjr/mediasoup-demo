@@ -82,8 +82,7 @@ export default class PeerView extends React.Component
 			onChangeMaxSendingSpatialLayer,
 			onChangeVideoPreferredLayers,
 			onChangeVideoPriority,
-			onRequestKeyFrame,
-			onStatsClick
+			onRequestKeyFrame
 		} = this.props;
 
 		const {
@@ -99,18 +98,6 @@ export default class PeerView extends React.Component
 		return (
 			<div data-component='PeerView'>
 				<div className='info'>
-					<div className='icons'>
-						<div
-							className={classnames('icon', 'info', { on: showInfo })}
-							onClick={() => this.setState({ showInfo: !showInfo })}
-						/>
-
-						<div
-							className={classnames('icon', 'stats')}
-							onClick={() => onStatsClick(peer.id)}
-						/>
-					</div>
-
 					<div className={classnames('box', { visible: showInfo })}>
 						<If condition={audioProducerId || audioConsumerId}>
 							<h1>audio</h1>
@@ -422,15 +409,6 @@ export default class PeerView extends React.Component
 								</span>
 							</Otherwise>
 						</Choose>
-
-						<div className='row'>
-							<span
-								className={classnames('device-icon', peer.device.flag)}
-							/>
-							<span className='device-version'>
-								{peer.device.name} {peer.device.version || null}
-							</span>
-						</div>
 					</div>
 				</div>
 

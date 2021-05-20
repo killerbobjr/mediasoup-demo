@@ -23,29 +23,8 @@ class ChatInput extends React.Component
 
 	render()
 	{
-		const {
-			connected,
-			chatDataProducer,
-			botDataProducer
-		} = this.props;
-
-		const { text } = this.state;
-
-		const disabled = !connected || (!chatDataProducer && !botDataProducer);
-
 		return (
-			<div data-component='ChatInput'>
-				<textarea
-					ref={(elem) => { this._textareaElem = elem; }}
-					placeholder={disabled ? 'Chat unavailable' : 'Write here...'}
-					dir='auto'
-					autoComplete='off'
-					disabled={disabled}
-					value={text}
-					onChange={this.handleChange.bind(this)}
-					onKeyPress={this.handleKeyPress.bind(this)}
-				/>
-			</div>
+			<div/>
 		);
 	}
 

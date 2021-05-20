@@ -51,33 +51,12 @@ class Me extends React.Component
 		else
 			webcamState = 'off';
 
-		let changeWebcamState;
-
-		if (Boolean(videoProducer) && videoProducer.type !== 'share' && me.canChangeWebcam)
-			changeWebcamState = 'on';
-		else
-			changeWebcamState = 'unsupported';
-
-		let shareState;
-
-		if (Boolean(videoProducer) && videoProducer.type === 'share')
-			shareState = 'on';
-		else
-			shareState = 'off';
-
 		const videoVisible = Boolean(videoProducer) && !videoProducer.paused;
-
-		let tip;
-
-		if (!me.displayNameSet)
-			tip = 'Click on your name to change it';
 
 		return (
 			<div
 				data-component='Me'
 				ref={(node) => (this._rootNode = node)}
-				data-tip={tip}
-				data-tip-disable={!tip}
 			>
 				<If condition={connected}>
 					<div className='controls'>
@@ -110,25 +89,6 @@ class Me extends React.Component
 							}}
 						/>
 
-						<div
-							className={classnames('button', 'change-webcam', changeWebcamState, {
-								disabled : me.webcamInProgress || me.shareInProgress
-							})}
-							onClick={() => roomClient.changeWebcam()}
-						/>
-
-						<div
-							className={classnames('button', 'share', shareState, {
-								disabled : me.shareInProgress || me.webcamInProgress
-							})}
-							onClick={() =>
-							{
-								if (shareState === 'on')
-									roomClient.disableShare();
-								else
-									roomClient.enableShare();
-							}}
-						/>
 					</div>
 				</If>
 

@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import classnames from 'classnames';
-import clipboardCopy from 'clipboard-copy';
 import * as appPropTypes from './appPropTypes';
 import { withRoomContext } from '../RoomContext';
 import * as requestActions from '../redux/requestActions';
 import { Appear } from './transitions';
 import Me from './Me';
-import ChatInput from './ChatInput';
 import Peers from './Peers';
 import Stats from './Stats';
 import Notifications from './Notifications';
@@ -23,8 +21,7 @@ class Room extends React.Component
 			roomClient,
 			room,
 			me,
-			amActiveSpeaker,
-			onRoomLinkCopy
+			amActiveSpeaker
 		}	= this.props;
 
 		return (
@@ -37,37 +34,6 @@ class Room extends React.Component
 						<p className={classnames('text', room.state)}>{room.state}</p>
 					</div>
 
-					<div className='room-link-wrapper'>
-						<div className='room-link'>
-							<a
-								className='link'
-								href={room.url}
-								target='_blank'
-								rel='noopener noreferrer'
-								onClick={(event) =>
-								{
-									// If this is a 'Open in new window/tab' don't prevent
-									// click default action.
-									if (
-										event.ctrlKey || event.shiftKey || event.metaKey ||
-										// Middle click (IE > 9 and everyone else).
-										(event.button && event.button === 1)
-									)
-									{
-										return;
-									}
-
-									event.preventDefault();
-
-									clipboardCopy(room.url)
-										.then(onRoomLinkCopy);
-								}}
-							>
-								invitation link
-							</a>
-						</div>
-					</div>
-
 					<Peers />
 
 					<div
@@ -76,10 +42,6 @@ class Room extends React.Component
 						})}
 					>
 						<Me />
-					</div>
-
-					<div className='chat-input-container'>
-						<ChatInput />
 					</div>
 
 					<div className='sidebar'>
