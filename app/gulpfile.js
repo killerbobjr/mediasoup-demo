@@ -65,8 +65,11 @@ const BANNER_OPTIONS =
 };
 const OUTPUT_DIR = '../server/public';
 
-// Set Node 'development' environment (unless externally set).
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+if (dotenv === undefined)
+{
+	// Set Node 'development' environment (unless externally set).
+	process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+}
 
 gutil.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 

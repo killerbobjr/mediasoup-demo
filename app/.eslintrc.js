@@ -187,7 +187,7 @@ module.exports =
 		'eol-last': 2,
 		'yoda': 2,
 		// eslint-plugin-import options.
-		'import/extensions': 2,
+		'import/extensions': 0,
 		'import/no-duplicates': 2,
 		// eslint-plugin-react options.
 		'jsx-quotes': [ 2, 'prefer-single' ],
