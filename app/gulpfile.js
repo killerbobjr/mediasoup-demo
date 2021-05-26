@@ -54,6 +54,7 @@ const stylus = require('gulp-stylus');
 const cssBase64 = require('gulp-css-base64');
 const nib = require('nib');
 const browserSync = require('browser-sync');
+const dotenv = require('dotenv').config();
 
 const PKG = require('./package.json');
 const BANNER = fs.readFileSync('banner.txt').toString();
