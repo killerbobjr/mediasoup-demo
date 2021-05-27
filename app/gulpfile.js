@@ -288,7 +288,7 @@ gulp.task('devel', gulp.series(
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					// https     : config.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -306,7 +306,7 @@ gulp.task('devel', gulp.series(
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					// https     : config.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},

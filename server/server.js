@@ -11,6 +11,7 @@ console.log('config.js:\n%s', JSON.stringify(config, null, '  '));
 /* eslint-enable no-console */
 
 const fs = require('fs');
+const http = require('http');
 const https = require('https');
 const url = require('url');
 const protoo = require('protoo-server');
@@ -32,6 +33,10 @@ const queue = new AwaitQueue();
 // Map of Room instances indexed by roomId.
 // @type {Map<Number, Room>}
 const rooms = new Map();
+
+// HTTP server.
+// @type {http.Server}
+let httpServer;
 
 // HTTPS server.
 // @type {https.Server}
@@ -70,9 +75,17 @@ async function run()
 	// Create Express app.
 	await createExpressApp();
 
-	// Run HTTPS server.
-	await runHttpsServer();
-
+	if(config.https !== undefined)
+	{
+		// Run HTTPS server.
+		await runHttpsServer();
+	}
+	else
+	{
+		// Run HTTPS server.
+		await runHttpServer();
+	}
+	
 	// Run a protoo WebSocketServer.
 	await runProtooWebSocketServer();
 
@@ -418,6 +431,24 @@ async function createExpressApp()
 }
 
 /**
+ * Create a Node.js HTTP server. It listens in the IP and port given in the
+ * configuration file and reuses the Express application as request listener.
+ */
+async function runHttpServer()
+{
+	logger.info('running an HTTP server...');
+
+	// HTTPS server for the protoo WebSocket server.
+	httpServer = http.createServer(expressApp);
+
+	await new Promise((resolve) =>
+	{
+		httpServer.listen(
+			Number(config.http.listenPort), config.http.listenIp, resolve);
+	});
+}
+
+/**
  * Create a Node.js HTTPS server. It listens in the IP and port given in the
  * configuration file and reuses the Express application as request listener.
  */
@@ -449,7 +480,7 @@ async function runProtooWebSocketServer()
 	logger.info('running protoo WebSocketServer...');
 
 	// Create the protoo WebSocket server.
-	protooWebSocketServer = new protoo.WebSocketServer(httpsServer,
+	protooWebSocketServer = new protoo.WebSocketServer(httpsServer?httpsServer:httpServer,
 		{
 			maxReceivedFrameSize     : 960000, // 960 KBytes.
 			maxReceivedMessageSize   : 960000,
