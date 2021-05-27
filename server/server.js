@@ -75,7 +75,7 @@ async function run()
 	// Create Express app.
 	await createExpressApp();
 
-	if(config.https !== undefined)
+	if (config.https !== undefined)
 	{
 		// Run HTTPS server.
 		await runHttpsServer();
